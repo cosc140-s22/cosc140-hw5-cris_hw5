@@ -6,6 +6,13 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2, blank=False)
     minimum_age_appropriate = models.IntegerField(default=0, blank=False)
     maximum_age_appropriate = models.IntegerField(default=-1, blank=False)
+    def random_image(self):
+      images= self.productimage_set.all()
+      if images.exists():
+        return images.order_by('?')[0]
+      else:
+        return None
+      
 
     def __str__(self):
         return f"Product {self.name}, price {self.price:.02f}"
@@ -17,3 +24,14 @@ class Product(models.Model):
             return f"Age {self.minimum_age_appropriate}"
         else:
             return f"Ages {self.minimum_age_appropriate} to {self.maximum_age_appropriate}"
+class ProductImage(models.Model):
+    image= models.ImageField(upload_to='product_images/')
+    caption= models.CharField(max_length=50,blank=True)
+    product= models.ForeignKey(Product,on_delete=models.CASCADE)
+
+
+
+    def __str__(self):
+      return self.caption
+
+

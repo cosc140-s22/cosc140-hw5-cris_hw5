@@ -3,6 +3,12 @@
 {% block content %}
 <p class="lead">Details for {{product.name}}</p>
 <dl>
+    {% for img in product.productimage_set.all %}
+    <img src="{{ img.image.url }} " alt='{{img.caption}}'>
+    
+    
+
+    {% endfor %}
     <dt>Description</dt><dd>{{product.description}}</dd>
     <dt>Ages</dt><dd>{{product.age_range}}</dd>
     <dt>Price</dt><dd>{{product.price}}</dd>
